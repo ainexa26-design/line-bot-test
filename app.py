@@ -87,7 +87,7 @@ try:
         ai_message = response.choices[0].message.content
 
         conversation_history[user_id].append({
-             "role": "assistant",
+            "role": "assistant",
             "content": ai_message
         })
     except Exception as e:
