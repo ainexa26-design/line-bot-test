@@ -60,19 +60,19 @@ def handle_message(event):
 
     from datetime import datetime
 
-sheet.append_row([
+    sheet.append_row([
     datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     user_id,
     user_message
-])
+    ])
 
-if user_id not in conversation_history:
+    if user_id not in conversation_history:
         conversation_history[user_id] = []
 
-conversation_history[user_id].append({
+    conversation_history[user_id].append({
         "role": "user",
         "content": user_message
-})
+    })
 try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
