@@ -54,8 +54,8 @@ conversation_history[user_id].append({
                      "role": "system",
                      "content": "あなたは島根県の企業向けAI受付LINE Botです。丁寧でわかりやすく、短く返答してください。問い合わせや予約相談には、必要事項を順番に聞いてください。"
                      },
-   ] + conversation_history[user_id][-10:]
-]
+                    ] + conversation_history[user_id][-10:]
+
         )
         ai_message = response.choices[0].message.content
 
@@ -82,3 +82,4 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=5001)
+    
