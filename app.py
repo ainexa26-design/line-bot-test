@@ -46,7 +46,7 @@ conversation_history[user_id].append({
     "content": user_message
 })
 
-    try:
+try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -82,4 +82,3 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=5001)
-    
