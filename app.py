@@ -63,11 +63,11 @@ try:
             "role": "assistant",
             "content": ai_message
         })
-    except Exception as e:
+except Exception as e:
         print("OPENAI ERROR:", e, flush=True)
         ai_message = "エラーが出ています"
 
-    with ApiClient(configuration) as api_client:
+with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
 
         line_bot_api.reply_message(
