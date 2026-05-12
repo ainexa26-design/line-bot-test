@@ -40,8 +40,15 @@ def handle_message(event):
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "user", "content": user_message}
-            ]
+    {
+        "role": "system",
+        "content": "あなたは島根県の企業向けAI受付LINE Botです。丁寧でわかりやすく、短く返答してください。問い合わせや予約相談には、必要事項を順番に聞いてください。"
+    },
+    {
+        "role": "user",
+        "content": user_message
+    }
+]
         )
         ai_message = response.choices[0].message.content
     except Exception as e:
