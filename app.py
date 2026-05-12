@@ -50,24 +50,25 @@ def handle_message(event):
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                    {
+                 {
                      "role": "system",
                      "content": "あなたは島根県の企業向けAI受付LINE Botです。丁寧でわかりやすく、短く返答してください。問い合わせや予約相談には、必要事項を順番に聞いてください。"
-                     },
-                    ] + conversation_history[user_id][-10:]
+                 },
+            ] + conversation_history[user_id][-10:]
 
-        )
+            )
+            
         ai_message = response.choices[0].message.content
 
         conversation_history[user_id].append({
-            "role": "assistant",
+             "role": "assistant",
             "content": ai_message
         })
-except Exception as e:
+    except Exception as e:
         print("OPENAI ERROR:", e, flush=True)
         ai_message = "エラーが出ています"
 
-with ApiClient(configuration) as api_client:
+    with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
 
         line_bot_api.reply_message(
