@@ -50,10 +50,10 @@ conversation_history[user_id].append({
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-    {
-        "role": "system",
-        "content": "あなたは島根県の企業向けAI受付LINE Botです。丁寧でわかりやすく、短く返答してください。問い合わせや予約相談には、必要事項を順番に聞いてください。"
-    },
+                    {
+                     "role": "system",
+                     "content": "あなたは島根県の企業向けAI受付LINE Botです。丁寧でわかりやすく、短く返答してください。問い合わせや予約相談には、必要事項を順番に聞いてください。"
+                     },
    ] + conversation_history[user_id][-10:]
 ]
         )
