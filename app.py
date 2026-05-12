@@ -8,6 +8,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 from openai import OpenAI
 import json
+from datetime import datetime
 
 load_dotenv()
 
