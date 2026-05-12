@@ -65,12 +65,11 @@ sheet.append_row([
 if user_id not in conversation_history:
         conversation_history[user_id] = []
 
-    conversation_history[user_id].append({
+conversation_history[user_id].append({
         "role": "user",
         "content": user_message
-    })
-
-    try:
+})
+try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
