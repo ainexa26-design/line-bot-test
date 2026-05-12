@@ -38,15 +38,15 @@ def handle_message(event):
     user_message = event.message.text
     user_id = event.source.user_id
 
-if user_id not in conversation_history:
-    conversation_history[user_id] = []
+        if user_id not in conversation_history:
+        conversation_history[user_id] = []
 
-conversation_history[user_id].append({
-    "role": "user",
-    "content": user_message
-})
+        conversation_history[user_id].append({
+            "role": "user",
+            "content": user_message
+        })
 
-try:
+        try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
