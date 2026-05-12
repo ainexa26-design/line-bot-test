@@ -62,7 +62,7 @@ sheet.append_row([
     user_message
 ])
 
-    if user_id not in conversation_history:
+if user_id not in conversation_history:
         conversation_history[user_id] = []
 
     conversation_history[user_id].append({
