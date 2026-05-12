@@ -7,6 +7,7 @@ import os
 import gspread
 from google.oauth2.service_account import Credentials
 from openai import OpenAI
+import json
 
 load_dotenv()
 
@@ -15,8 +16,10 @@ scope = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-creds = Credentials.from_service_account_file(
-    "credentials.json",
+creds_info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+
+creds = Credentials.from_service_account_info(
+    creds_info,
     scopes=scope
 )
 
