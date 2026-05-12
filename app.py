@@ -4,9 +4,25 @@ from linebot.v3.messaging import MessagingApi, Configuration, ApiClient, ReplyMe
 from linebot.v3.webhooks import MessageEvent, TextMessageContent
 from dotenv import load_dotenv
 import os
+import gspread
+from google.oauth2.service_account import Credentials
 from openai import OpenAI
 
 load_dotenv()
+
+scope = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
+
+creds = Credentials.from_service_account_file(
+    "credentials.json",
+    scopes=scope
+)
+
+client_sheet = gspread.authorize(creds)
+
+sheet = client_sheet.open("LINE Bot 顧客管理").sheet1
 
 app = Flask(__name__)
 
@@ -37,6 +53,14 @@ def callback():
 def handle_message(event):
     user_message = event.message.text
     user_id = event.source.user_id
+
+    from datetime import datetime
+
+sheet.append_row([
+    datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    user_id,
+    user_message
+])
 
     if user_id not in conversation_history:
         conversation_history[user_id] = []
