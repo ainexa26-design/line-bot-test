@@ -93,7 +93,13 @@ def handle_message(event):
                 ai_message,
                 "問い合わせ",
                 "未対応",
-                ""
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
             ])
                 
 
