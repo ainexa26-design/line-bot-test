@@ -86,52 +86,52 @@ def handle_message(event):
             ai_message = response.choices[0].message.content
 
 
-extract_response = client.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=[
-        {
-            "role": "system",
-            "content": """
-ユーザーのメッセージから予約情報を抽出してください。
+            extract_response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": """
+                    ユーザーのメッセージから予約情報を抽出してください。
 
-以下のJSON形式のみで返してください。
+                    以下のJSON形式のみで返してください。
 
-{
-  "date": "",
-  "time": "",
-  "name": "",
-  "phone": "",
-  "service": ""
-}
-"""
-        },
-        {
-            "role": "user",
-            "content": user_message
-        }
-    ]
-)
-import json
-extracted = json.loads(extract_response.choices[0].message.content)
+                    {
+                    "date": "",
+                    "time": "",
+                    "name": "",
+                    "phone": "",
+                    "service": ""
+                    }
+                    """
+                    },
+                    {
+                        "role": "user",
+                        "content": user_message
+                    }
+                ]
+            )
+            import json
+            extracted = json.loads(extract_response.choices[0].message.content)
 
-reservation_date = extracted.get("date", "")
-reservation_time = extracted.get("time", "")
-reservation_name = extracted.get("name", "")
-reservation_phone = extracted.get("phone", "")
-reservation_service = extracted.get("service", "")
+            reservation_date = extracted.get("date", "")
+            reservation_time = extracted.get("time", "")
+            reservation_name = extracted.get("name", "")
+            reservation_phone = extracted.get("phone", "")
+            reservation_service = extracted.get("service", "")
 
-sheet.append_row([
-    datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    user_id,
-    "",
-    user_message,
-    ai_message,
-    reservation_date,
-    reservation_time,
-    reservation_name,
-    reservation_phone,
-    reservation_service
-])
+            sheet.append_row([
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                user_id,
+                "",
+                user_message,
+                ai_message,
+                reservation_date,
+                reservation_time,
+                reservation_name,
+                reservation_phone,
+                reservation_service
+            ])
                 
 
             conversation_history[user_id].append({
