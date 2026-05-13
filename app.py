@@ -60,6 +60,7 @@ def handle_message(event):
 
     user_message = event.message.text
     user_id = event.source.user_id
+    print(user_id)
 
     from datetime import datetime
 
