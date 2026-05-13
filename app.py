@@ -92,7 +92,6 @@ def handle_message(event):
                 user_message,
                 ai_message,
                 "問い合わせ",
-                "未判定",
                 "未対応",
                 ""
             ])
