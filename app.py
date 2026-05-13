@@ -97,14 +97,14 @@ def handle_message(event):
             ai_message = "エラーが出ています"
 
             with ApiClient(configuration) as api_client:
-        line_bot_api = MessagingApi(api_client)
+                line_bot_api = MessagingApi(api_client)
 
-        line_bot_api.reply_message(
-            ReplyMessageRequest(
-                reply_token=event.reply_token,
-                messages=[TextMessage(text=ai_message)]
-            )
-        )
+                line_bot_api.reply_message(
+                    ReplyMessageRequest(
+                        reply_token=event.reply_token,
+                        messages=[TextMessage(text=ai_message)]
+                    )
+                )
 
     
 
