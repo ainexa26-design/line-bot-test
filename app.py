@@ -91,6 +91,7 @@ try:
             "role": "assistant",
             "content": ai_message
         })
+        
 except Exception as e:
         print("OPENAI ERROR:", e, flush=True)
         ai_message = "エラーが出ています"
@@ -104,6 +105,8 @@ with ApiClient(configuration) as api_client:
                 messages=[TextMessage(text=ai_message)]
             )
         )
+
+    
 
 
 if __name__ == "__main__":
