@@ -55,6 +55,9 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessageContent)
 def handle_message(event):
+
+    ai_message = "テスト成功"
+
     user_message = event.message.text
     user_id = event.source.user_id
 
@@ -85,7 +88,6 @@ def handle_message(event):
 
                 )
                 
-            ai_message = response.choices[0].message.content
 
             conversation_history[user_id].append({
                 "role": "assistant",
