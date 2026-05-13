@@ -95,18 +95,18 @@ def handle_message(event):
             })
             
     except Exception as e:
-            print("OPENAI ERROR:", e, flush=True)
-            ai_message = "エラーが出ています"
+        print("OPENAI ERROR:", e, flush=True)
+        ai_message = "エラーが出ています"
 
-            with ApiClient(configuration) as api_client:
-                line_bot_api = MessagingApi(api_client)
+    with ApiClient(configuration) as api_client:
+        line_bot_api = MessagingApi(api_client)
 
-                line_bot_api.reply_message(
-                    ReplyMessageRequest(
-                        reply_token=event.reply_token,
-                        messages=[TextMessage(text=ai_message)]
-                    )
-                )
+        line_bot_api.reply_message(
+            ReplyMessageRequest(
+                reply_token=event.reply_token,
+                messages=[TextMessage(text=ai_message)]
+            )
+        )
 
     
 
