@@ -63,11 +63,7 @@ def handle_message(event):
 
     from datetime import datetime
 
-    sheet.append_row([
-    datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    user_id,
-    user_message
-    ])
+    
 
     if user_id not in conversation_history:
         conversation_history[user_id] = []
@@ -88,6 +84,18 @@ def handle_message(event):
 
             )
             ai_message = response.choices[0].message.content
+
+            sheet.append_row([
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                user_id,
+                "",
+                user_message,
+                ai_message,
+                "問い合わせ",
+                "未判定",
+                "未対応",
+                ""
+            ])
                 
 
             conversation_history[user_id].append({
