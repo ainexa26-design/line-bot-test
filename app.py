@@ -3,30 +3,13 @@ from linebot.v3 import WebhookHandler
 from linebot.v3.messaging import MessagingApi, Configuration, ApiClient, ReplyMessageRequest, TextMessage
 from linebot.v3.webhooks import MessageEvent, TextMessageContent
 from dotenv import load_dotenv
-import os
-import gspread
-from google.oauth2.service_account import Credentials
 from openai import OpenAI
-import json
-from datetime import datetime
+import os
+
 
 load_dotenv()
 
-scope = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive"
-]
 
-creds_info = json.loads(os.environ["GOOGLE_CREDENTIALS"])
-
-creds = Credentials.from_service_account_info(
-    creds_info,
-    scopes=scope
-)
-
-client_sheet = gspread.authorize(creds)
-
-sheet = client_sheet.open("LINE Bot 顧客管理").sheet1
 
 app = Flask(__name__)
 
@@ -40,7 +23,7 @@ client = OpenAI(
 )
 conversation_history = {}
 
-@app.route("/callback", methods=["POST"])
+@app.route("/webhook", methods=["POST"])
 def callback():
     signature = request.headers["X-Line-Signature"]
     body = request.get_data(as_text=True)
@@ -78,61 +61,30 @@ def handle_message(event):
                 model="gpt-4o-mini",
                 messages=[
                     {
-                        "role": "system",
-                        "content": "あなたは島根県の企業向けAI受付LINE Botです。丁寧でわかりやすく、短く返答してください。問い合わせや予約相談には、必要事項を順番に聞いてください。"
-                    },
+                    "role": "system",
+                    "content": """
+                    あなたはAI面接官です。
+
+                    ユーザーの面接練習を行ってください。
+
+                    対象：
+                    ・就活
+                    ・バイト
+                    ・大学入試
+
+                    ルール：
+                    ・質問は1回につき1つ
+                    ・ユーザーの回答後に良かった点を1つ伝える
+                    ・改善点を2つ伝える
+                    ・次の質問をする
+                    ・面接官らしく自然に会話する
+                    """
+                    }
                 ] + conversation_history[user_id][-10:]
 
             )
             ai_message = response.choices[0].message.content
 
-
-            extract_response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {
-                        "role": "system",
-                        "content": """
-                    ユーザーのメッセージから予約情報を抽出してください。
-
-                    以下のJSON形式のみで返してください。
-
-                    {
-                    "date": "",
-                    "time": "",
-                    "name": "",
-                    "phone": "",
-                    "service": ""
-                    }
-                    """
-                    },
-                    {
-                        "role": "user",
-                        "content": user_message
-                    }
-                ]
-            )
-            import json
-            extracted = json.loads(extract_response.choices[0].message.content)
-
-            reservation_date = extracted.get("date", "")
-            reservation_time = extracted.get("time", "")
-            reservation_name = extracted.get("name", "")
-            reservation_phone = extracted.get("phone", "")
-            reservation_service = extracted.get("service", "")
-
-            sheet.append_row([
-                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                user_id,
-                "",
-                user_message,
-                ai_message,
-                reservation_date,
-                reservation_time,
-                reservation_name,
-                reservation_phone,
-                reservation_service
-            ])
                 
 
             conversation_history[user_id].append({
